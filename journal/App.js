@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
+
+import Post from './Post';
 
 class App extends Component {
   static navigationOptions = {
@@ -13,10 +15,14 @@ class App extends Component {
     }
   };
 
+  goToPost = () => this.props.navigation.navigate('Post');
+
   render() {
     return (
       <View style={styles.container}>
         <Text> Hello</Text>
+
+        <Button onPress={this.goToPost} title="Go to post page" />
       </View>
     );
   }
@@ -34,5 +40,8 @@ const styles = StyleSheet.create({
 export default createStackNavigator({
   Home: {
     screen: App
+  },
+  Post: {
+    screen: Post
   }
 });
