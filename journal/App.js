@@ -2,18 +2,12 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
+import navStyles from './styles/navStyles';
+
 import Post from './Post';
 
 class App extends Component {
-  static navigationOptions = {
-    title: 'Home',
-    headerStyle: {
-      backgroundColor: '#373142'
-    },
-    headerTitleStyle: {
-      color: '#FFF'
-    }
-  };
+  static navigationOptions = { title: 'Home', ...navStyles };
 
   goToPost = () => this.props.navigation.navigate('Post');
 
