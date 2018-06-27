@@ -1,3 +1,6 @@
+AndroidStudio/
+.idea/*
+
 # Logs
 logs
 *.log
