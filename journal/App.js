@@ -4,7 +4,13 @@ import { createStackNavigator } from 'react-navigation';
 
 class App extends Component {
   static navigationOptions = {
-    title: 'Home'
+    title: 'Home',
+    headerStyle: {
+      backgroundColor: '#373142'
+    },
+    headerTitleStyle: {
+      color: '#FFF'
+    }
   };
 
   render() {
