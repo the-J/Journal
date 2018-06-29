@@ -1,8 +1,12 @@
-import React, { Component } from 'reac';
+import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 
-export default class Posts extends Component {
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
+
+class Posts extends Component {
   render() {
+    console.log(this.props.data);
     return (
       <View>
         <Text> Posts</Text>
@@ -10,3 +14,14 @@ export default class Posts extends Component {
     );
   }
 }
+
+const postsQuery = gql`
+  {
+    allPosts {
+      id
+      title
+    }
+  }
+`;
+
+export default graphql(postsQuery)(Posts);
