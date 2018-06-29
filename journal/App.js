@@ -1,7 +1,5 @@
 // React
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { createStackNavigator } from 'react-navigation';
 
 // Apollo
 import { ApolloProvider } from 'react-apollo';
@@ -11,12 +9,8 @@ import { HttpLink } from 'apollo-link-http';
 import { onError } from 'apollo-link-error';
 import { ApolloLink } from 'apollo-link';
 
-// Styles
-import navStyles from './styles/navStyles';
-
-// Project imports
-import Post from './Post';
-import Posts from './Posts';
+// Navigator
+import Navigator from './Navigator';
 
 const client = new ApolloClient({
   link: ApolloLink.from([
@@ -37,31 +31,12 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 
-class App extends Component {
-  static navigationOptions = { title: 'Home', ...navStyles };
-
-  goToPost = () => this.props.navigation.navigate('Post');
-
+export default class App extends Component {
   render() {
     return (
       <ApolloProvider client={client}>
-        <View style={styles.container}>
-          <Posts {...this.props} />
-        </View>
+        <Navigator />
       </ApolloProvider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {}
-});
-
-export default createStackNavigator({
-  Home: {
-    screen: App
-  },
-  Post: {
-    screen: Post
-  }
-});
