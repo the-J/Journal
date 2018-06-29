@@ -10,9 +10,10 @@ export default class Post extends Component {
   };
 
   render() {
+    console.log(this.props);
     return (
       <View>
-        <Text> Post.js </Text>
+        <Text> {this.props.navigation.state.params.id} </Text>
       </View>
     );
   }
