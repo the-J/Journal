@@ -6,7 +6,8 @@ import gql from 'graphql-tag';
 
 class Posts extends Component {
   render() {
-    console.log(this.props.data);
+    console.log(this.props);
+
     return (
       <View>
         <Text> Posts</Text>
@@ -24,4 +25,6 @@ const postsQuery = gql`
   }
 `;
 
-export default graphql(postsQuery)(Posts);
+export default graphql(postsQuery, {
+  props: ({ data }) => ({ ...data })
+})(Posts);
