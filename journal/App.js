@@ -13,6 +13,7 @@ import { ApolloLink } from 'apollo-link';
 import navStyles from './styles/navStyles';
 
 import Post from './Post';
+import Posts from './Posts';
 
 const client = new ApolloClient({
   link: ApolloLink.from([
@@ -42,8 +43,7 @@ class App extends Component {
     return (
       <ApolloProvider client={client}>
         <View style={styles.container}>
-          <Text> Hello</Text>
-
+          <Posts />
           <Button onPress={this.goToPost} title="Go to post page" />
         </View>
       </ApolloProvider>
