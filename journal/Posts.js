@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, FlatList } from 'react-native';
 
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 class Posts extends Component {
   render() {
-    console.log(this.props);
+    const { loading, allPosts } = this.props;
+
+    if (loading) return null;
 
     return (
       <View>
-        <Text> Posts</Text>
+        <FlatList
+          data={allPosts}
+          keyExtractor={item => item.id}
+          renderItem={({ item }) => <Text>{item.title}</Text>}
+        />
       </View>
     );
   }
