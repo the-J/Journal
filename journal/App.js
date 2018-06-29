@@ -1,5 +1,6 @@
+// React
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
 // Apollo
@@ -10,8 +11,10 @@ import { HttpLink } from 'apollo-link-http';
 import { onError } from 'apollo-link-error';
 import { ApolloLink } from 'apollo-link';
 
+// Styles
 import navStyles from './styles/navStyles';
 
+// Project imports
 import Post from './Post';
 import Posts from './Posts';
 
@@ -43,8 +46,7 @@ class App extends Component {
     return (
       <ApolloProvider client={client}>
         <View style={styles.container}>
-          <Posts />
-          <Button onPress={this.goToPost} title="Go to post page" />
+          <Posts {...this.props} />
         </View>
       </ApolloProvider>
     );
