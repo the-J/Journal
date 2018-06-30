@@ -6,6 +6,7 @@ import {
   FlatList,
   ActivityIndicator
 } from 'react-native';
+import { List, ListItem, Body, Right, Icon } from 'native-base';
 
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -18,22 +19,30 @@ class Posts extends Component {
 
     return (
       <View>
-        <FlatList
-          data={allPosts}
-          keyExtractor={item => item.id}
-          renderItem={({ item }) => (
-            <Text
-              style={styles.listText}
-              onPress={() =>
-                navigation.navigate('Post', {
-                  id: item.id,
-                  title: item.title
-                })
-              }>
-              {item.title}
-            </Text>
-          )}
-        />
+        <List>
+          <FlatList
+            data={allPosts}
+            keyExtractor={item => item.id}
+            renderItem={({ item }) => (
+              <ListItem
+                style={styles.listText}
+                onPress={() =>
+                  navigation.navigate('Post', {
+                    id: item.id,
+                    title: item.title
+                  })
+                }>
+                <Body>
+                  <Text>{item.title}</Text>
+                </Body>
+
+                <Right>
+                  <Icon name="arrow-forward" />
+                </Right>
+              </ListItem>
+            )}
+          />
+        </List>
       </View>
     );
   }
@@ -54,10 +63,4 @@ export default graphql(postsQuery, {
   props: ({ data }) => ({ ...data })
 })(Posts);
 
-const styles = StyleSheet.create({
-  listText: {
-    paddingTop: 30,
-    flex: 1,
-    fontSize: 40
-  }
-});
+const styles = StyleSheet.create({});
