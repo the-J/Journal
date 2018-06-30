@@ -28,8 +28,10 @@ class Posts extends Component {
   }
 }
 
+// this query need to be named so it
+//  will be refetched after form onSubmit()
 const postsQuery = gql`
-  {
+  query postsQuery {
     allPosts {
       id
       title
