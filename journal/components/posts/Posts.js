@@ -52,7 +52,7 @@ class Posts extends Component {
 //  will be refetched after form onSubmit()
 const postsQuery = gql`
   query postsQuery {
-    allPosts {
+    allPosts(orderBy: createdAt_ASC) {
       id
       title
     }
