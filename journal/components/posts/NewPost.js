@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, ActivityIndicator } from 'react-native';
 
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -11,31 +11,40 @@ import navStyles from '../../styles/navStyles';
 class NewPost extends Component {
   static navigationOptions = { title: 'Post', ...navStyles };
 
-  newPost = ({ title, body }) => {
-    console.log(title, body);
+  state = { loading: false };
 
-    this.props
-      .createPost({
-        variables: {
-          title,
-          body
-        }
+  newPost = ({ title, body }) => {
+    this.setState({ loading: true });
+
+    const { createPost, navigation } = this.props;
+
+    createPost({
+      variables: {
+        title,
+        body
+      }
+    })
+      .then(() => {
+        navigation.goBack();
       })
-      .then(() => {})
       .catch(err => console.log(err));
   };
 
   render() {
     return (
       <View>
-        <PostForm onSubmit={this.newPost} />
+        {this.state.loading ? (
+          <ActivityIndicator size="large" />
+        ) : (
+          <PostForm onSubmit={this.newPost} />
+        )}
       </View>
     );
   }
 }
 
 const newPost = gql`
-  mutation newPost($title: String!, $body: String!) {
+  mutation createPost($title: String!, $body: String!) {
     createPost(title: $title, body: $body) {
       id
     }

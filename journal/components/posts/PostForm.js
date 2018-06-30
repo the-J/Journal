@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   },
   body: {
     padding: 10,
-    height: 400,
+    height: 100,
     borderColor: '#333',
     borderWidth: 1,
     textAlignVertical: 'top'
