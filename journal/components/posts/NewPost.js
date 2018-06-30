@@ -51,6 +51,10 @@ const newPost = gql`
   }
 `;
 
+// options will refetch named query
 export default graphql(newPost, {
-  name: 'createPost'
+  name: 'createPost',
+  options: {
+    refetchQueries: ['postsQuery']
+  }
 })(NewPost);
