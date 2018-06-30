@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, ActivityIndicator } from 'react-native';
 
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -7,17 +7,21 @@ import gql from 'graphql-tag';
 import navStyles from '../../styles/navStyles';
 
 class Post extends Component {
-  static navigationOptions = { title: 'Post', ...navStyles };
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: navigation.state.params.title,
+      ...navStyles
+    };
+  };
 
   render() {
     const { Post, loading } = this.props;
 
-    if (loading) return null;
+    if (loading) return <ActivityIndicator size="large" />;
 
     return (
       <View>
-        <Text>{this.props.Post.id}</Text>
-        <Text>{this.props.Post.title}</Text>
+        <Text>{Post.body}</Text>
       </View>
     );
   }
@@ -28,6 +32,7 @@ const postQuery = gql`
     Post(id: $id) {
       id
       title
+      body
     }
   }
 `;
