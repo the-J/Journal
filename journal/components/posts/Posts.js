@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  ActivityIndicator
+} from 'react-native';
 
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -8,7 +14,7 @@ class Posts extends Component {
   render() {
     const { loading, allPosts, navigation } = this.props;
 
-    if (loading) return null;
+    if (loading) return <ActivityIndicator size="large" />;
 
     return (
       <View>
@@ -18,7 +24,12 @@ class Posts extends Component {
           renderItem={({ item }) => (
             <Text
               style={styles.listText}
-              onPress={() => navigation.navigate('Post', { id: item.id })}>
+              onPress={() =>
+                navigation.navigate('Post', {
+                  id: item.id,
+                  title: item.title
+                })
+              }>
               {item.title}
             </Text>
           )}
