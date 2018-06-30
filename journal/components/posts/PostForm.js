@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { TextInput, Button, View, StyleSheet } from 'react-native';
+import { Form, Item, Input, Label } from 'native-base';
 
 import navStyles from '../../styles/navStyles';
 
@@ -20,35 +21,35 @@ export default class PostForm extends Component {
 
   render() {
     return (
-      <View>
-        <TextInput
-          style={styles.title}
-          onChangeText={title => this.setState({ title })}
-          value={this.state.title}
-        />
-        <TextInput
-          style={styles.body}
-          onChangeText={body => this.setState({ body })}
-          value={this.state.body}
-        />
+      <Form>
+        <Item floatingLabel>
+          <Label>Title</Label>
+
+          <Input
+            onChangeText={title => this.setState({ title })}
+            value={this.state.title}
+          />
+        </Item>
+
+        <Item floatingLabel>
+          <Label>Body</Label>
+
+          <Input
+            multiline
+            style={styles.body}
+            onChangeText={body => this.setState({ body })}
+            value={this.state.body}
+          />
+        </Item>
+
         <Button title="Save Post" onPress={this.submitForm} />
-      </View>
+      </Form>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  title: {
-    padding: 10,
-    height: 40,
-    borderColor: '#333',
-    borderWidth: 1
-  },
   body: {
-    padding: 10,
-    height: 100,
-    borderColor: '#333',
-    borderWidth: 1,
-    textAlignVertical: 'top'
+    height: 100
   }
 });
