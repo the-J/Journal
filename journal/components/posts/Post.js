@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import navStyles from './styles/navStyles';
+import navStyles from '../../styles/navStyles';
 
 class Post extends Component {
   static navigationOptions = { title: 'Post', ...navStyles };
