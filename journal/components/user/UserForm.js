@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, Button, StyleSheet } from 'react-native';
+import { Button, StyleSheet } from 'react-native';
 import { Form, Item, Input, Label } from 'native-base';
 
 export default class UserForm extends Component {
