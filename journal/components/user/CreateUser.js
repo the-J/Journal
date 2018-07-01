@@ -6,12 +6,20 @@ import gql from 'graphql-tag';
 
 import UserForm from './UserForm';
 
+import { signIn } from '../../utils/util-login';
+
 class CreateUser extends Component {
   createUser = async ({ email, password }) => {
     try {
       const user = await this.props.createUser({
         variables: { email, password }
       });
+
+      const signin = await this.props.signinUser({
+        variables: { email, password }
+      });
+
+      signIn(signin.data.signinUser.token);
     } catch (err) {
       console.error('createUser err', err);
     }

@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableHighlight } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableHighlight,
+  ActivityIndicator
+} from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import { Fab, Icon } from 'native-base';
+
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 
 import Posts from './components/posts/Posts';
 import Post from './components/posts/Post';
 import NewPost from './components/posts/NewPost';
-
 import Login from './components/user/Login';
 
 import navStyles from './styles/navStyles';
@@ -29,16 +37,6 @@ class Home extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-between'
-  },
-  newPost: {
-    backgroundColor: '#00FF00'
-  }
-});
-
 const Navigator = createStackNavigator({
   Home: {
     screen: Home
@@ -51,9 +49,32 @@ const Navigator = createStackNavigator({
   }
 });
 
-const NavWrapper = props => {
-  return <Login />;
+const NavWrapper = ({ loading, user }) => {
+  console.log(user);
+  if (loading) return <ActivityIndicator size="large" />;
+  if (!user) return <Login />;
   return <Navigator />;
 };
 
-export default NavWrapper;
+const userQuery = gql`
+  query userQuery {
+    user {
+      id
+      email
+    }
+  }
+`;
+
+export default graphql(userQuery, {
+  props: ({ data }) => ({ ...data })
+})(NavWrapper);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'space-between'
+  },
+  newPost: {
+    backgroundColor: '#00FF00'
+  }
+});
