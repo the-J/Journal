@@ -8,20 +8,15 @@ import {
 } from 'react-native';
 import { List, ListItem, Body, Right, Icon } from 'native-base';
 
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
-
 class Posts extends Component {
   render() {
-    const { loading, allPosts, navigation } = this.props;
-
-    if (loading) return <ActivityIndicator size="large" />;
+    const { navigation, screenProps } = this.props;
 
     return (
       <View>
         <List>
           <FlatList
-            data={allPosts}
+            data={screenProps.user.posts}
             keyExtractor={item => item.id}
             renderItem={({ item }) => (
               <ListItem
@@ -48,19 +43,6 @@ class Posts extends Component {
   }
 }
 
-// this query need to be named so it
-//  will be refetched after form onSubmit()
-const postsQuery = gql`
-  query postsQuery {
-    allPosts(orderBy: createdAt_ASC) {
-      id
-      title
-    }
-  }
-`;
-
-export default graphql(postsQuery, {
-  props: ({ data }) => ({ ...data })
-})(Posts);
+export default Posts;
 
 const styles = StyleSheet.create({});
