@@ -7,6 +7,8 @@ import Posts from './components/posts/Posts';
 import Post from './components/posts/Post';
 import NewPost from './components/posts/NewPost';
 
+import Login from './components/user/Login';
+
 import navStyles from './styles/navStyles';
 
 class Home extends Component {
@@ -27,7 +29,17 @@ class Home extends Component {
   }
 }
 
-export default createStackNavigator({
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'space-between'
+  },
+  newPost: {
+    backgroundColor: '#00FF00'
+  }
+});
+
+const Navigator = createStackNavigator({
   Home: {
     screen: Home
   },
@@ -39,12 +51,9 @@ export default createStackNavigator({
   }
 });
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-between'
-  },
-  newPost: {
-    backgroundColor: '#00FF00'
-  }
-});
+const NavWrapper = props => {
+  return <Login />;
+  return <Navigator />;
+};
+
+export default NavWrapper;
