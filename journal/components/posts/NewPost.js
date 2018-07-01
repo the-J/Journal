@@ -16,12 +16,13 @@ class NewPost extends Component {
   newPost = ({ title, body }) => {
     this.setState({ loading: true });
 
-    const { createPost, navigation } = this.props;
+    const { createPost, navigation, screenProps } = this.props;
 
     createPost({
       variables: {
         title,
-        body
+        body,
+        userId: screenProps.user.id
       }
     })
       .then(() => {
@@ -44,8 +45,8 @@ class NewPost extends Component {
 }
 
 const newPost = gql`
-  mutation createPost($title: String!, $body: String!) {
-    createPost(title: $title, body: $body) {
+  mutation createPost($title: String!, $body: String!, $userId: ID!) {
+    createPost(title: $title, body: $body, userId: $userId) {
       id
     }
   }
@@ -55,6 +56,6 @@ const newPost = gql`
 export default graphql(newPost, {
   name: 'createPost',
   options: {
-    refetchQueries: ['postsQuery']
+    refetchQueries: ['userQuery']
   }
 })(NewPost);
