@@ -8,9 +8,29 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
 import { onError } from 'apollo-link-error';
 import { ApolloLink } from 'apollo-link';
+import { setContext } from 'apollo-link-context';
 
 // Navigator
 import Navigator from './Navigator';
+
+import { getToken } from './utils/util-login';
+
+const authLink = setContext(async (req, { headers }) => {
+  const token = await getToken();
+
+  return {
+    ...headers,
+    headers: {
+      authorization: token ? `Bearer ${token}` : null
+    }
+  };
+});
+
+const httpLink = new HttpLink({
+  uri: 'https://api.graph.cool/simple/v1/cjiy4mzjl242e0157keehyxqf'
+});
+
+const link = authLink.concat(httpLink);
 
 const client = new ApolloClient({
   link: ApolloLink.from([
@@ -23,10 +43,7 @@ const client = new ApolloClient({
         );
       if (networkError) console.log(`[Network error]: ${networkError}`);
     }),
-    new HttpLink({
-      uri: 'https://api.graph.cool/simple/v1/cjiy4mzjl242e0157keehyxqf',
-      credentials: 'same-origin'
-    })
+    link
   ]),
   cache: new InMemoryCache()
 });
