@@ -50,10 +50,9 @@ const Navigator = createStackNavigator({
 });
 
 const NavWrapper = ({ loading, user }) => {
-  console.log(user);
   if (loading) return <ActivityIndicator size="large" />;
   if (!user) return <Login />;
-  return <Navigator />;
+  return <Navigator screenProps={{ user }} />;
 };
 
 const userQuery = gql`
@@ -61,6 +60,10 @@ const userQuery = gql`
     user {
       id
       email
+      posts(orderBy: createdAt_ASC) {
+        id
+        title
+      }
     }
   }
 `;
