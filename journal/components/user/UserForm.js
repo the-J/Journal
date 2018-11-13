@@ -47,6 +47,8 @@ export default class UserForm extends Component {
     render() {
         return (
             <Form>
+                {this.props.errors ? <Text style={styles.error}>{this.props.errors[ 0 ]}</Text> : null}
+
                 <Item floatingLabel>
                     <Label>Email</Label>
 

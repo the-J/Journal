@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-import { graphql, compose } from 'react-apollo';
+import { compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import UserForm from './UserForm';
@@ -8,6 +8,10 @@ import UserForm from './UserForm';
 import { signIn } from '../../utils/util-login';
 
 class CreateUser extends Component {
+    state = {
+        errors: []
+    };
+
     createUser = async ( { email, password } ) => {
         try {
             const user = await this.props.createUser({
@@ -20,8 +24,10 @@ class CreateUser extends Component {
 
             signIn(signin.data.signinUser.token);
             this.props.client.resetStore();
-        } catch (err) {
-            console.error('createUser err', err.message);
+
+        } catch (res) {
+            const errors = res.graphQLErrors.map(error => error.message);
+            this.setState({ errors });
         }
     };
 
@@ -29,7 +35,11 @@ class CreateUser extends Component {
         return (
             <View>
                 <Text>Register</Text>
-                <UserForm type="Register" onSubmit={this.createUser} />
+                <UserForm
+                    type="Register"
+                    onSubmit={this.createUser}
+                    errors={this.state.errors}
+                />
             </View>
         );
     }

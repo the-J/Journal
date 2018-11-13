@@ -9,19 +9,22 @@ import UserForm from './UserForm';
 import { signIn } from '../../utils/util-login';
 
 class LoginUser extends Component {
+    state = {
+        errors: []
+    };
+
     loginUser = async ( { email, password } ) => {
         try {
             const signin = await this.props.signinUser({
                 variables: { email, password }
             });
 
-            console.log({signin});
-
             signIn(signin.data.signinUser.token);
             this.props.client.resetStore();
 
-        } catch (err) {
-            console.error('loginUser err:', err);
+        } catch (res) {
+            const errors = res.graphQLErrors.map(error => error.message);
+            this.setState({ errors });
         }
     };
 
@@ -29,7 +32,11 @@ class LoginUser extends Component {
         return (
             <View>
                 <Text>Login</Text>
-                <UserForm type="Login" onSubmit={this.loginUser} />
+                <UserForm
+                    type="Login"
+                    onSubmit={this.loginUser}
+                    errors={this.state.errors}
+                />
             </View>
         );
     }
