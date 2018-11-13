@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -15,6 +15,8 @@ class LoginUser extends Component {
                 variables: { email, password }
             });
 
+            console.log({signin});
+
             signIn(signin.data.signinUser.token);
             this.props.client.resetStore();
 
@@ -26,6 +28,7 @@ class LoginUser extends Component {
     render() {
         return (
             <View>
+                <Text>Login</Text>
                 <UserForm type="Login" onSubmit={this.loginUser} />
             </View>
         );

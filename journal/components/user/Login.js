@@ -17,11 +17,12 @@ class Login extends Component {
                         : <LoginUser {...this.props} />
                 }
 
-                <Button
-                    containerStyle={{ marginTop: 20 }}
-                    title={this.state.register ? 'Login' : 'Register'}
-                    onPress={() => this.setState({ register: !this.state.register })}
-                />
+                <View style={styles.button}>
+                    <Button
+                        title={this.state.register ? 'Login' : 'Register'}
+                        onPress={() => this.setState({ register: !this.state.register })}
+                    />
+                </View>
             </View>
         );
     }
@@ -29,9 +30,14 @@ class Login extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         justifyContent: 'center',
-        padding: 20
+        padding: 20,
+        width: '100%',
+        marginTop: 20
+    },
+    button: {
+        width: '90%',
+        margin: 10
     }
 });
 
