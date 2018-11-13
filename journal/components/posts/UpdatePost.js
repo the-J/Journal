@@ -15,7 +15,11 @@ class UpdatePost extends Component {
     updatePost = ( { title, body } ) => {
         this.setState({ loading: true });
 
-        const { updatePost, navigation, screenProps } = this.props;
+        const { updatePost, navigation, screenProps, Post } = this.props;
+
+        if (Post.title === title && Post.body === body) {
+            return navigation.navigate('Home');
+        }
 
         updatePost({
             variables: {
@@ -34,11 +38,11 @@ class UpdatePost extends Component {
     render() {
         return (
             <View>
-                {this.state.loading ? (
-                    <ActivityIndicator size="large" />
-                ) : (
-                    <PostForm onSubmit={this.updatePost} post={this.props.Post} />
-                )}
+                {
+                    this.state.loading
+                        ? <ActivityIndicator size="large" />
+                        : <PostForm onSubmit={this.updatePost} post={this.props.Post} />
+                }
             </View>
         );
     }
