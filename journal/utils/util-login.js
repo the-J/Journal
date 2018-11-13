@@ -15,7 +15,7 @@ export const signIn = newToken => {
   return AsyncStorage.setItem('AUTH_TOKEN', newToken);
 };
 
-export const signOut = newToken => {
+export const signOut = () => {
   token = undefined;
-  return AsyncStorage.remove('AUTH_TOKEN');
+  return AsyncStorage.removeItem('AUTH_TOKEN');
 };
