@@ -9,27 +9,27 @@ import UserForm from './UserForm';
 import { signIn } from '../../utils/util-login';
 
 class LoginUser extends Component {
-  loginUser = async ({ email, password }) => {
-     try {
-      const signin = await this.props.signinUser({
-        variables: { email, password }
-      });
+    loginUser = async ( { email, password } ) => {
+        try {
+            const signin = await this.props.signinUser({
+                variables: { email, password }
+            });
 
-      signIn(signin.data.signinUser.token);
-      this.props.client.resetStore();
+            signIn(signin.data.signinUser.token);
+            this.props.client.resetStore();
 
-     } catch (err) {
-      console.error('loginUser err:', err);
+        } catch (err) {
+            console.error('loginUser err:', err);
+        }
+    };
+
+    render() {
+        return (
+            <View>
+                <UserForm type="Login" onSubmit={this.loginUser} />
+            </View>
+        );
     }
-  };
-
-  render() {
-    return (
-      <View>
-        <UserForm type="Login" onSubmit={this.loginUser} />
-      </View>
-    );
-  }
 }
 
 const signinUser = gql`

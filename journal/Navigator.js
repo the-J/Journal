@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  View,
-  Button,
-  ActivityIndicator
-} from 'react-native';
+import { ActivityIndicator, Button, StyleSheet, View } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import { Fab, Icon } from 'native-base';
 
-import { graphql } from 'react-apollo';
+import { graphql, withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
-import {withApollo} from 'react-apollo';
 
-import {signOut} from './utils/util-login.js';
+import { signOut } from './utils/util-login.js';
 
 import Posts from './components/posts/Posts';
 import Post from './components/posts/Post';
@@ -22,45 +16,45 @@ import Login from './components/user/Login';
 import navStyles from './styles/navStyles';
 
 class Home extends Component {
-  static navigationOptions = { title: 'Home', ...navStyles };
+    static navigationOptions = { title: 'Home', ...navStyles };
 
-  newPost = () => this.props.navigation.navigate('NewPost');
+    newPost = () => this.props.navigation.navigate('NewPost');
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <Posts {...this.props} />
-        <Button
-          onPress={() => {
-            signOut();
-            this.props.client.resetStore();
-          }}
-          title='Logout'
-        />
-        <Fab style={styles.newPost} onPress={this.newPost}>
-          <Icon name="add" />
-        </Fab>
-      </View>
-    );
-  }
+    render() {
+        return (
+            <View style={styles.container}>
+                <Posts {...this.props} />
+                <Button
+                    onPress={() => {
+                        signOut();
+                        this.props.client.resetStore();
+                    }}
+                    title='Logout'
+                />
+                <Fab style={styles.newPost} onPress={this.newPost}>
+                    <Icon name="add" />
+                </Fab>
+            </View>
+        );
+    }
 }
 
 const Navigator = createStackNavigator({
-  Home: {
-    screen: withApollo(Home)
-  },
-  Post: {
-    screen: Post
-  },
-  NewPost: {
-    screen: NewPost
-  }
+    Home: {
+        screen: withApollo(Home)
+    },
+    Post: {
+        screen: Post
+    },
+    NewPost: {
+        screen: NewPost
+    }
 });
 
-const NavWrapper = ({ loading, user }) => {
-  if (loading) return <ActivityIndicator size="large" />;
-  if (!user) return <Login />;
-  return <Navigator screenProps={{ user }} />;
+const NavWrapper = ( { loading, user } ) => {
+    if (loading) return <ActivityIndicator size="large" />;
+    if (!user) return <Login />;
+    return <Navigator screenProps={{ user }} />;
 };
 
 const userQuery = gql`
@@ -77,15 +71,15 @@ const userQuery = gql`
 `;
 
 export default graphql(userQuery, {
-  props: ({ data }) => ({ ...data })
+    props: ( { data } ) => ({ ...data })
 })(NavWrapper);
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-between'
-  },
-  newPost: {
-    backgroundColor: '#00FF00'
-  }
+    container: {
+        flex: 1,
+        justifyContent: 'space-between'
+    },
+    newPost: {
+        backgroundColor: '#00FF00'
+    }
 });

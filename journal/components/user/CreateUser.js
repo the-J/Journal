@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 
-import { graphql, compose } from 'react-apollo';
+import { compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import UserForm from './UserForm';
@@ -9,31 +9,31 @@ import UserForm from './UserForm';
 import { signIn } from '../../utils/util-login';
 
 class CreateUser extends Component {
-  createUser = async ({ email, password }) => {
-    try {
-      const user = await this.props.createUser({
-        variables: { email, password }
-      });
+    createUser = async ( { email, password } ) => {
+        try {
+            const user = await this.props.createUser({
+                variables: { email, password }
+            });
 
-      const signin = await this.props.signinUser({
-        variables: { email, password }
-      });
+            const signin = await this.props.signinUser({
+                variables: { email, password }
+            });
 
-      signIn(signin.data.signinUser.token);
-      this.props.client.resetStore();
-    } catch (err) {
-      console.error('createUser err', err.message);
+            signIn(signin.data.signinUser.token);
+            this.props.client.resetStore();
+        } catch (err) {
+            console.error('createUser err', err.message);
+        }
+    };
+
+    render() {
+        return (
+            <View>
+                <Text>Register</Text>
+                <UserForm type="Register" onSubmit={this.createUser} />
+            </View>
+        );
     }
-  };
-
-  render() {
-    return (
-      <View>
-        <Text>Register</Text>
-        <UserForm type="Register" onSubmit={this.createUser} />
-      </View>
-    );
-  }
 }
 
 const createUser = gql`
