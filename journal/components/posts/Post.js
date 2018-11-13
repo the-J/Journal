@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { Fab, Icon } from 'native-base';
 
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -14,6 +15,10 @@ class Post extends Component {
         };
     };
 
+    updatePost = () => {
+        this.props.navigation.navigate('UpdatePost');
+    };
+
     render() {
         const { Post, loading } = this.props;
 
@@ -22,6 +27,9 @@ class Post extends Component {
         return (
             <View style={styles.container}>
                 <Text style={styles.bodyText}>{Post.body}</Text>
+                <Fab style={styles.newPost} onPress={this.updatePost}>
+                    <Icon name="create" />
+                </Fab>
             </View>
         );
     }
@@ -48,9 +56,13 @@ export default graphql(postQuery, {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 20
+        padding: 20,
+        flex: 1
     },
     bodyText: {
         fontSize: 16
+    },
+    newPost: {
+        backgroundColor: '#00FF00'
     }
 });

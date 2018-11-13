@@ -10,6 +10,7 @@ import { signOut } from './utils/util-login.js';
 
 import Posts from './components/posts/Posts';
 import Post from './components/posts/Post';
+import UpdatePost from './components/posts/UpdatePost';
 import NewPost from './components/posts/NewPost';
 import Login from './components/user/Login';
 
@@ -48,6 +49,9 @@ const Navigator = createStackNavigator({
     },
     NewPost: {
         screen: NewPost
+    },
+    UpdatePost: {
+        screen: UpdatePost
     }
 });
 
