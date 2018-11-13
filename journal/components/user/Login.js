@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
 import { View, Button, StyleSheet } from 'react-native';
+import {withApollo} from 'react-apollo';
 
 import CreateUser from './CreateUser';
 import LoginUser from './LoginUser';
 
-export default class Login extends Component {
+class Login extends Component {
   state = { register: true };
 
   render() {
     return (
       <View style={styles.container}>
-        {this.state.register ? <CreateUser /> : <LoginUser />}
+        {
+          this.state.register
+            ? <CreateUser {...this.props} />
+            : <LoginUser {...this.props} />
+        }
 
         <Button
           containerStyle={{ marginTop: 20 }}
@@ -29,3 +34,5 @@ const styles = StyleSheet.create({
     padding: 20
   }
 });
+
+export default withApollo(Login);

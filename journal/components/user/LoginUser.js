@@ -16,7 +16,9 @@ class LoginUser extends Component {
       });
 
       signIn(signin.data.signinUser.token);
-    } catch (err) {
+      this.props.client.resetStore();
+
+     } catch (err) {
       console.error('loginUser err:', err);
     }
   };

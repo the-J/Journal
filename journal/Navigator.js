@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
-  Text,
-  TouchableHighlight,
+  Button,
   ActivityIndicator
 } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
@@ -11,6 +10,9 @@ import { Fab, Icon } from 'native-base';
 
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import {withApollo} from 'react-apollo';
+
+import {signOut} from './utils/util-login.js';
 
 import Posts from './components/posts/Posts';
 import Post from './components/posts/Post';
@@ -28,7 +30,13 @@ class Home extends Component {
     return (
       <View style={styles.container}>
         <Posts {...this.props} />
-
+        <Button
+          onPress={() => {
+            signOut();
+            this.props.client.resetStore();
+          }}
+          title='Logout'
+        />
         <Fab style={styles.newPost} onPress={this.newPost}>
           <Icon name="add" />
         </Fab>
@@ -39,7 +47,7 @@ class Home extends Component {
 
 const Navigator = createStackNavigator({
   Home: {
-    screen: Home
+    screen: withApollo(Home)
   },
   Post: {
     screen: Post

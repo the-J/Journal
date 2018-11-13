@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 
-import { graphql } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import UserForm from './UserForm';
@@ -20,8 +20,9 @@ class CreateUser extends Component {
       });
 
       signIn(signin.data.signinUser.token);
+      this.props.client.resetStore();
     } catch (err) {
-      console.error('createUser err', err);
+      console.error('createUser err', err.message);
     }
   };
 
@@ -45,4 +46,15 @@ const createUser = gql`
   }
 `;
 
-export default graphql(createUser, { name: 'createUser' })(CreateUser);
+const signinUser = gql`
+  mutation signinUser($email: String!, $password: String!) {
+    signinUser(email: { email: $email, password: $password }) {
+      token
+    }
+  }
+`;
+
+export default compose(
+    graphql(signinUser, { name: 'signinUser' }),
+    graphql(createUser, { name: 'createUser' })
+)(CreateUser);
