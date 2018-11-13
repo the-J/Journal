@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, StyleSheet } from 'react-native';
+import { Button, StyleSheet, View } from 'react-native';
 import { Form, Input, Item, Label } from 'native-base';
 
 import navStyles from '../../styles/navStyles';
@@ -46,7 +46,9 @@ export default class PostForm extends Component {
                     />
                 </Item>
 
-                <Button title="Save Post" onPress={this.submitForm} />
+                <View style={styles.button}>
+                    <Button title="Save Post" onPress={this.submitForm} />
+                </View>
             </Form>
         );
     }
@@ -55,5 +57,9 @@ export default class PostForm extends Component {
 const styles = StyleSheet.create({
     body: {
         height: 100
+    },
+    button: {
+        width: '90%',
+        marginLeft: '5%'
     }
 });
