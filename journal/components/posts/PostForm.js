@@ -7,9 +7,13 @@ import navStyles from '../../styles/navStyles';
 export default class PostForm extends Component {
     static navigationOptions = { title: 'Post', ...navStyles };
 
+    static defaultProps = {
+        post: {}
+    };
+
     state = {
-        title: '',
-        body: ''
+        title: this.props.post.title || '',
+        body: this.props.post.body || ''
     };
 
     submitForm = () => {

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, View } from 'react-native';
-
-import { graphql } from 'react-apollo';
+import { compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import PostForm from './PostForm';
@@ -13,20 +12,21 @@ class UpdatePost extends Component {
 
     state = { loading: false };
 
-    newPost = ( { title, body } ) => {
+    updatePost = ( { title, body } ) => {
         this.setState({ loading: true });
 
-        const { createPost, navigation, screenProps } = this.props;
+        const { updatePost, navigation, screenProps } = this.props;
 
-        createPost({
+        updatePost({
             variables: {
+                id: this.props.Post.id,
                 title,
                 body,
                 userId: screenProps.user.id
             }
         })
             .then(() => {
-                navigation.goBack();
+                navigation.navigate('Home');
             })
             .catch(err => console.log(err));
     };
@@ -37,25 +37,44 @@ class UpdatePost extends Component {
                 {this.state.loading ? (
                     <ActivityIndicator size="large" />
                 ) : (
-                    <PostForm onSubmit={this.newPost} />
+                    <PostForm onSubmit={this.updatePost} post={this.props.Post} />
                 )}
             </View>
         );
     }
 }
 
-const newPost = gql`
-  mutation createPost($title: String!, $body: String!, $userId: ID!) {
-    createPost(title: $title, body: $body, userId: $userId) {
+const updatePost = gql`
+  mutation updatePost($id: ID!, $title: String!, $body: String!, $userId: ID!) {
+    updatePost(id: $id, title: $title, body: $body, userId: $userId) {
       id
     }
   }
 `;
 
-// options will refetch named query
-export default graphql(newPost, {
-    name: 'createPost',
-    options: {
-        refetchQueries: [ 'userQuery' ]
+const postQuery = gql`
+  query Post($id: ID!) {
+    Post(id: $id) {
+      id
+      title
+      body
     }
-})(UpdatePost);
+  }
+`;
+
+export default compose(
+    graphql(updatePost, {
+        name: 'updatePost',
+        options: {
+            refetchQueries: [ 'Post' ]
+        }
+    }),
+    graphql(postQuery, {
+        props: ( { data } ) => ({ ...data }),
+        options: ( { navigation } ) => ({
+            variables: {
+                id: navigation.state.params.id
+            }
+        })
+    })
+)(UpdatePost);

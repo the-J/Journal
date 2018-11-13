@@ -16,7 +16,12 @@ class Post extends Component {
     };
 
     updatePost = () => {
-        this.props.navigation.navigate('UpdatePost');
+        const { Post } = this.props;
+        this.props.navigation.navigate('UpdatePost', {
+            id: Post.id,
+            title: Post.title,
+            body: Post.body
+        });
     };
 
     render() {
