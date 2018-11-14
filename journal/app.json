@@ -1,5 +1,16 @@
 {
   "expo": {
-    "sdkVersion": "27.0.0"
+    "sdkVersion": "27.0.0",
+    "name": "MBJ - TipCalc",
+    "description": "Simple App for creating notes",
+    "version": "1.0.0",
+    "slug": "journalapp",
+    "icon": "./mbj_logo.png",
+    "ios": {
+      "bundleIdentifier": "com.thej.journalapp"
+    },
+    "android": {
+      "package": "com.thej.journalapp"
+    }
   }
 }
