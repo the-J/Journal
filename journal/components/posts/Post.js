@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { Fab, Icon } from 'native-base';
 
@@ -27,18 +27,42 @@ class Post extends Component {
     render() {
         const { Post, loading } = this.props;
 
-        if (loading) return <ActivityIndicator size="large" />;
-
         return (
-            <View style={styles.container}>
-                <Text style={styles.bodyText}>{Post.body}</Text>
-                <Fab style={styles.newPost} onPress={this.updatePost}>
-                    <Icon name="create" />
-                </Fab>
-            </View>
+            <Fragment>
+                {loading ? (
+                    <View style={styles.loader}>
+                        <ActivityIndicator size="large" />
+                    </View>
+                ) : (
+                    <View style={styles.container}>
+                        <Text style={styles.bodyText}>{Post.body}</Text>
+                        <Fab style={styles.newPost} onPress={this.updatePost}>
+                            <Icon name="create" />
+                        </Fab>
+                    </View>
+                )}
+            </Fragment>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    loader: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    container: {
+        padding: 20,
+        flex: 1
+    },
+    bodyText: {
+        fontSize: 16
+    },
+    newPost: {
+        backgroundColor: '#00FF00'
+    }
+});
 
 const postQuery = gql`
   query Post($id: ID!) {
@@ -58,16 +82,3 @@ export default graphql(postQuery, {
         }
     })
 })(Post);
-
-const styles = StyleSheet.create({
-    container: {
-        padding: 20,
-        flex: 1
-    },
-    bodyText: {
-        fontSize: 16
-    },
-    newPost: {
-        backgroundColor: '#00FF00'
-    }
-});

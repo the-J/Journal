@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import React, { Component, Fragment } from 'react';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -26,23 +26,33 @@ class NewPost extends Component {
             }
         })
             .then(() => {
-                navigation.goBack();
+                navigation.navigate('Home');
             })
             .catch(err => console.log(err));
     };
 
     render() {
         return (
-            <View>
+            <Fragment>
                 {this.state.loading ? (
-                    <ActivityIndicator size="large" />
+                    <View style={styles.loader}>
+                        <ActivityIndicator size="large" />
+                    </View>
                 ) : (
                     <PostForm onSubmit={this.newPost} />
                 )}
-            </View>
+            </Fragment>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    loader: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
+});
 
 const newPost = gql`
   mutation createPost($title: String!, $body: String!, $userId: ID!) {
