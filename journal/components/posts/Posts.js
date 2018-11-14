@@ -3,8 +3,17 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { Body, Icon, List, ListItem, Right } from 'native-base';
 
 class Posts extends Component {
+    goToPost = post => {
+        const { navigation } = this.props;
+
+        navigation.navigate('Post', {
+            id: post.id,
+            title: post.title
+        });
+    };
+
     render() {
-        const { navigation, screenProps } = this.props;
+        const { screenProps } = this.props;
 
         return (
             <Fragment>
@@ -16,12 +25,7 @@ class Posts extends Component {
                             renderItem={( { item } ) => (
                                 <ListItem
                                     style={styles.listText}
-                                    onPress={() =>
-                                        navigation.navigate('Post', {
-                                            id: item.id,
-                                            title: item.title
-                                        })
-                                    }
+                                    onPress={() => this.goToPost(item)}
                                 >
                                     <Body>
                                     <Text>{item.title}</Text>
