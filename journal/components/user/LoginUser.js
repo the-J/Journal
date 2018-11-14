@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -24,6 +23,8 @@ class LoginUser extends Component {
             this.props.client.resetStore();
 
         } catch (res) {
+            this.props.loading(false);
+
             const errors = res.graphQLErrors.map(error => error.message);
             this.setState({ errors });
         }
@@ -31,14 +32,11 @@ class LoginUser extends Component {
 
     render() {
         return (
-            <View>
-                <Text>Login</Text>
-                <UserForm
-                    type="Login"
-                    onSubmit={this.loginUser}
-                    errors={this.state.errors}
-                />
-            </View>
+            <UserForm
+                type="Login"
+                onSubmit={this.loginUser}
+                errors={this.state.errors}
+            />
         );
     }
 }

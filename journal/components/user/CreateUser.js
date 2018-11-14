@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
 import { compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -28,6 +27,8 @@ class CreateUser extends Component {
             this.props.client.resetStore();
 
         } catch (res) {
+            this.props.loading(false);
+
             const errors = res.graphQLErrors.map(error => error.message);
             this.setState({ errors });
         }
@@ -35,14 +36,11 @@ class CreateUser extends Component {
 
     render() {
         return (
-            <View>
-                <Text>Register</Text>
-                <UserForm
-                    type="Register"
-                    onSubmit={this.createUser}
-                    errors={this.state.errors}
-                />
-            </View>
+            <UserForm
+                type="Register"
+                onSubmit={this.createUser}
+                errors={this.state.errors}
+            />
         );
     }
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, Button, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Button, StyleSheet, Text, View } from 'react-native';
 import { withApollo } from 'react-apollo';
 
 import CreateUser from './CreateUser';
@@ -24,6 +24,8 @@ class Login extends Component {
 
         return (
             <View style={styles.container}>
+                <Text style={styles.header}>{this.state.register ? 'Register' : 'Login'}</Text>
+
                 {
                     this.state.register
                         ? <CreateUser {...this.props} loading={bool => this.loading(bool)} />
@@ -54,6 +56,9 @@ const styles = StyleSheet.create({
         width: '100%',
         padding: '5%',
         marginTop: 20
+    },
+    header: {
+        color: 'grey'
     },
     verticalLine: {
         borderBottomColor: 'lightgrey',
