@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Alert, StyleSheet, Text, View } from 'react-native';
 import { Fab, Icon } from 'native-base';
 
 import { compose, graphql } from 'react-apollo';
@@ -54,9 +54,17 @@ class Post extends Component {
                         <Fab
                             style={styles.deletePost}
                             position="bottomLeft"
-                            onPress={this.deletePost}
+                            onPress={() => (Alert.alert(
+                                'Delete post?',
+                                'Post \'' + Post.title + '\' will be deleted',
+                                [
+                                    { text: 'cancel', onPress: () => {}},
+                                    { text: 'delete', onPress: () => this.deletePost()}
+                                ],
+                                { cancelable: true }
+                            ))}
                         >
-                            <Icon name="create" />
+                            <Icon name="trash" />
                         </Fab>
 
                         <Fab
