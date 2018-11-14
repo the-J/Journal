@@ -45,8 +45,6 @@ class Posts extends Component {
     }
 }
 
-export default Posts;
-
 const styles = StyleSheet.create({
     createNew: {
         flex: 1,
@@ -57,3 +55,6 @@ const styles = StyleSheet.create({
         fontSize: 20
     }
 });
+
+export default Posts;
+

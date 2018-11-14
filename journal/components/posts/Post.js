@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { Fab, Icon } from 'native-base';
 
-import { graphql } from 'react-apollo';
+import { compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import navStyles from '../../styles/navStyles';
@@ -24,6 +24,20 @@ class Post extends Component {
         });
     };
 
+    deletePost = async () => {
+        try {
+            const { Post, navigation } = this.props;
+
+            await this.props.deletePost({
+                variables: { id: Post.id }
+            });
+
+            navigation.navigate('Home');
+        } catch (res) {
+            console.log(res);
+        }
+    };
+
     render() {
         const { Post, loading } = this.props;
 
@@ -36,7 +50,19 @@ class Post extends Component {
                 ) : (
                     <View style={styles.container}>
                         <Text style={styles.bodyText}>{Post.body}</Text>
-                        <Fab style={styles.newPost} onPress={this.updatePost}>
+
+                        <Fab
+                            style={styles.deletePost}
+                            position="bottomLeft"
+                            onPress={this.deletePost}
+                        >
+                            <Icon name="create" />
+                        </Fab>
+
+                        <Fab
+                            style={styles.newPost}
+                            onPress={this.updatePost}
+                        >
                             <Icon name="create" />
                         </Fab>
                     </View>
@@ -61,24 +87,43 @@ const styles = StyleSheet.create({
     },
     newPost: {
         backgroundColor: '#00FF00'
+    },
+    deletePost: {
+        backgroundColor: 'red'
     }
 });
 
 const postQuery = gql`
-  query Post($id: ID!) {
-    Post(id: $id) {
-      id
-      title
-      body
+    query Post($id: ID!) {
+        Post(id: $id) {
+            id
+            title
+            body
+        }
     }
-  }
 `;
 
-export default graphql(postQuery, {
-    props: ( { data } ) => ({ ...data }),
-    options: ( { navigation } ) => ({
-        variables: {
-            id: navigation.state.params.id
+const deletePost = gql`
+    mutation deletePost($id: ID!) {
+        deletePost(id: $id) {
+            id
+        }
+    }
+`;
+
+export default compose(
+    graphql(postQuery, {
+        props: ( { data } ) => ({ ...data }),
+        options: ( { navigation } ) => ({
+            variables: {
+                id: navigation.state.params.id
+            }
+        })
+    }),
+    graphql(deletePost, {
+        name: 'deletePost',
+        options: {
+            refetchQueries: [ 'userQuery' ]
         }
     })
-})(Post);
+)(Post);
