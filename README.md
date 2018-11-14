@@ -1,6 +1,8 @@
 # Journal - Simple App for creating notes
 
 ### React Native, Native-Base, GraphQl with Apollo and graph.cool
+* [expo](https://expo.io/@astronnomos/journalapp)
+* [build within repo](build/journalapp-bdd333a369804ba6860cf5f802dd01fb-signed.apk)
 
 ![tipCalculator](assets/journal.gif)
 
