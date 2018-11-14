@@ -46,30 +46,38 @@ export default class UserForm extends Component {
 
     render() {
         return (
-            <Form>
-                {this.props.errors ? <Text style={styles.error}>{this.props.errors[ 0 ]}</Text> : null}
+            <Form style={styles.form}>
+                {
+                    !!this.props.errors
+                        ? this.props.errors.map(error => <Text key={Math.random()} style={styles.error}>{error}</Text>)
+                        : null
+                }
 
-                <Item floatingLabel>
-                    <Label>Email</Label>
+                <View style={styles.input}>
+                    <Item floatingLabel>
+                        <Label>Email</Label>
 
-                    <Input
-                        keyboardType="email-address"
-                        onChangeText={email => this.onTextChange({ email: email })}
-                        value={this.state.email}
-                    />
-                </Item>
+                        <Input
+                            keyboardType="email-address"
+                            onChangeText={email => this.onTextChange({ email: email })}
+                            value={this.state.email}
+                        />
+                    </Item>
+                </View>
 
                 {this.state.errorEmail ? <Text style={styles.error}>{this.state.errorEmail}</Text> : null}
 
-                <Item floatingLabel>
-                    <Label>Password</Label>
+                <View style={styles.input}>
+                    <Item floatingLabel>
+                        <Label>Password</Label>
 
-                    <Input
-                        secureTextEntry
-                        onChangeText={password => this.onTextChange({ password: password })}
-                        value={this.state.password}
-                    />
-                </Item>
+                        <Input
+                            secureTextEntry
+                            onChangeText={password => this.onTextChange({ password: password })}
+                            value={this.state.password}
+                        />
+                    </Item>
+                </View>
 
                 {this.state.errorPass ? <Text style={styles.error}>{this.state.errorPass}</Text> : null}
 
@@ -87,9 +95,18 @@ export default class UserForm extends Component {
 const styles = StyleSheet.create({
     button: {
         width: '90%',
-        margin: 10
+        margin: '5%'
     },
     error: {
         color: 'red'
+    },
+    border: {
+        borderColor: 'black',
+        borderWidth: 1
+    },
+    input: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingRight: '5%'
     }
 });

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { ActivityIndicator, Button, StyleSheet, View } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import { Fab, Icon } from 'native-base';
-
 import { graphql, withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
 

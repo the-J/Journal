@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -15,6 +14,8 @@ class LoginUser extends Component {
 
     loginUser = async ( { email, password } ) => {
         try {
+            this.props.loading(true);
+
             const signin = await this.props.signinUser({
                 variables: { email, password }
             });

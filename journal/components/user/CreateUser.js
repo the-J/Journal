@@ -14,6 +14,8 @@ class CreateUser extends Component {
 
     createUser = async ( { email, password } ) => {
         try {
+            this.props.loading(true);
+
             const user = await this.props.createUser({
                 variables: { email, password }
             });
