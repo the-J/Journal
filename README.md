@@ -1,10 +1,17 @@
-# Journal- React Native, GraphQL with Apollo and [Graph.cool (hosted DB CMS)]([https://www.graph.cool/)
+# Journal- Simple App for creating notes
+
+#### React Native, GraphQL with Apollo and graph.cool
+
+![tipCalculator](assets/journal.gif)
+
+* handles graph.cool server errors
+* allows to add, edit and remove created notes
 
 #### Setting up GraphCool
-* go to [graph.cool](https://www.graph.cool/) and setup your account
+* [Graph.cool (hosted DB CMS)]([https://www.graph.cool/)
+* setup your account
 * create new project and insert DB Schema provided below
-* 
-
+* probably provide some user access restrictions on posts API
 
 ##### DB Schema
 ```graphql
