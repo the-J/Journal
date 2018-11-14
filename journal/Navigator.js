@@ -32,7 +32,7 @@ class Home extends Component {
                     title='Logout'
                 />
                 <Fab style={styles.newPost} onPress={this.newPost}>
-                    <Icon name="add" />
+                    <Icon name="create" />
                 </Fab>
             </View>
         );
