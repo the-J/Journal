@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { ActivityIndicator, Button, StyleSheet, Text, View } from 'react-native';
 import { withApollo } from 'react-apollo';
 
@@ -8,40 +8,56 @@ import LoginUser from './LoginUser';
 class Login extends Component {
     state = {
         register: true,
-        loading: false
+        loading: false,
+        errors: []
     };
 
     loading = bool => this.setState({ loading: bool });
 
+    setErrors = errors => this.setState({ errors });
+
     render() {
-        if (this.state.loading) {
-            return (
-                <View style={styles.loader}>
-                    <ActivityIndicator size="large" />
-                </View>
-            );
-        }
+        const { register, loading, errors } = this.state;
 
         return (
-            <View style={styles.container}>
-                <Text style={styles.header}>{this.state.register ? 'Register' : 'Login'}</Text>
+            <Fragment>
+                {loading
+                    ? (
+                        <View style={styles.loader}>
+                            <ActivityIndicator size="large" />
+                        </View>
+                    ) : (
+                        <View style={styles.container}>
+                            <Text style={styles.header}>{register ? 'Register' : 'Login'}</Text>
 
-                {
-                    this.state.register
-                        ? <CreateUser {...this.props} loading={bool => this.loading(bool)} />
-                        : <LoginUser {...this.props} loading={bool => this.loading(bool)} />
+                            {register
+                                ? <CreateUser
+                                    {...this.props}
+                                    errors={errors}
+                                    setErrors={errors => this.setErrors(errors)}
+                                    loading={bool => this.loading(bool)}
+                                />
+                                : <LoginUser
+                                    {...this.props}
+                                    errors={errors}
+                                    setErrors={errors => this.setErrors(errors)}
+                                    loading={bool => this.loading(bool)}
+                                />
+                            }
+
+                            <View style={styles.verticalLine} />
+
+                            <View style={styles.button}>
+                                <Button
+                                    loading={loading}
+                                    title={register ? 'Login' : 'Register'}
+                                    onPress={() => this.setState({ register: !register })}
+                                />
+                            </View>
+                        </View>
+                    )
                 }
-
-                <View style={styles.verticalLine} />
-
-                <View style={styles.button}>
-                    <Button
-                        loading={this.state.loading}
-                        title={this.state.register ? 'Login' : 'Register'}
-                        onPress={() => this.setState({ register: !this.state.register })}
-                    />
-                </View>
-            </View>
+            </Fragment>
         );
     }
 }

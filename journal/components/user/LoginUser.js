@@ -7,10 +7,6 @@ import UserForm from './UserForm';
 import { signIn } from '../../utils/util-login';
 
 class LoginUser extends Component {
-    state = {
-        errors: []
-    };
-
     loginUser = async ( { email, password } ) => {
         try {
             this.props.loading(true);
@@ -26,7 +22,7 @@ class LoginUser extends Component {
             this.props.loading(false);
 
             const errors = res.graphQLErrors.map(error => error.message);
-            this.setState({ errors });
+            this.props.setErrors( errors );
         }
     };
 
@@ -35,7 +31,7 @@ class LoginUser extends Component {
             <UserForm
                 type="Login"
                 onSubmit={this.loginUser}
-                errors={this.state.errors}
+                errors={this.props.errors}
             />
         );
     }

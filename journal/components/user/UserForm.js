@@ -49,7 +49,7 @@ export default class UserForm extends Component {
             <Form style={styles.form}>
                 {
                     !!this.props.errors
-                        ? this.props.errors.map(error => <Text key={Math.random()} style={styles.error}>{error}</Text>)
+                        ? <Text style={styles.error}>{this.props.errors[ 0 ]}</Text>
                         : null
                 }
 
