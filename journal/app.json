@@ -1,8 +1,8 @@
 {
   "expo": {
     "sdkVersion": "27.0.0",
-    "name": "MBJ - TipCalc",
-    "description": "Simple App for creating notes",
+    "name": "MBJ - Journal",
+    "description": "Simple App for creating notes. Visit github for more info: https://github.com/the-J/Journal",
     "version": "1.0.0",
     "slug": "journalapp",
     "icon": "./mbj_logo.png",
